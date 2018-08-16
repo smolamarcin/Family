@@ -8,7 +8,7 @@ services:
       - MYSQL_USER=family_user
       - MYSQL_PASSWORD=family
     ports:
-      - 9999:3306
+      - 0:3306
   web:
     build:
       context: .
@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     ports:
-      - 9998:8080
+      - 0:8080
     environment:
       - DATABASE_HOST=db
       - DATABASE_USER=family_user
@@ -30,4 +30,4 @@ services:
       context: angular-app
       dockerfile: Dockerfile-angular
     ports:
-      - 80:80
+      - 0:80

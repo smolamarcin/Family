@@ -37,3 +37,22 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Intelij files
+target/
+.idea/
+*.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar

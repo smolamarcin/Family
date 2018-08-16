@@ -1,0 +1,33 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4$$W0rd
+      - MYSQL_DATABSE=family_db
+      - MYSQL_USER=family_user
+      - MYSQL_PASSWORD=family
+    ports:
+      - 9999:3306
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-spring
+    image: family:latest
+    depends_on:
+      - db
+    ports:
+      - 9998:8080
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=family_user
+      - DATABASE_PASSWORD=family
+      - DATABASE_NAME=family_db
+      - DATABASE_PORT=9999
+  angular:
+    container_name: angular-container
+    build: 
+      context: angular-app
+      dockerfile: Dockerfile-angular
+    ports:
+      - 80:80

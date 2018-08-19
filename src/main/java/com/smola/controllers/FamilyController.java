@@ -1,30 +1,59 @@
 package com.smola.controllers;
 
+import com.smola.model.Child;
+import com.smola.model.Family;
+import com.smola.model.Father;
+import com.smola.service.FamilyService;
+import com.smola.service.FamilyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RestController
 public class FamilyController {
 
     @Autowired
-    private Environment environment;
+    private FamilyService familyService;
 
-    @GetMapping("/")
-    public String hello() throws UnknownHostException {
-        String datePattern = "dd/MM/yyyy HH:mm:ss";
-        DateTimeFormatter df = DateTimeFormatter.ofPattern(datePattern);
-        LocalDateTime now = LocalDateTime.now();
+    public FamilyController(FamilyService familyService) {
+        this.familyService = familyService;
+    }
 
-        String hostName = InetAddress.getLocalHost().getHostName();
-        String port = environment.getProperty("local.server.port");
+    @PostMapping(value = "/createFamily")
+    public ResponseEntity<Family> createFamily(@RequestBody Family family){
+        return familyService.createFamily(family);
+    }
 
-        return " Do you speak whale? - Web server @ " + df.format(now) + " Host: " + hostName + " port: " + port;
+    @GetMapping(value = "/readFamily")
+    public ResponseEntity<?> readFamily(){
+        return familyService.readFamily();
+    }
+
+    @GetMapping(value = "/readFather")
+    public ResponseEntity<?> readFather(){
+        return familyService.readFather();
+    }
+
+    @GetMapping(value = "/readChild")
+    public ResponseEntity<?> readChild(){
+        return familyService.readChild();
+    }
+
+    @GetMapping(value = "searchChild")
+    public ResponseEntity<?> searchChild(){
+        return familyService.searchChild();
+    }
+
+    @PutMapping(value = "/addFather")
+    public ResponseEntity<?> addFatherToFamily(@RequestBody Family family,
+                                               @RequestBody Father father){
+        return familyService.addFatherToFamily(family,father);
+    }
+
+    @PostMapping(value = "/addChild")
+    public ResponseEntity<?> addChildToFamily(@RequestBody Child child){
+        return familyService.addChildToFamily(child);
     }
 }

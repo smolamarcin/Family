@@ -3,7 +3,6 @@ package com.smola.service;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
-import com.smola.model.RequestWrapper;
 import com.smola.repositories.FamilyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,23 +21,19 @@ public class FamilyServiceImpl implements FamilyService {
         this.familyRepository = familyRepository;
     }
 
-    public ResponseEntity<?> addFatherToFamily(RequestWrapper requestWrapper) {
-        Father father = requestWrapper.getFather();
-        Family family = requestWrapper.getFamily();
-        family.addFather(father);
-        return ResponseEntity.status(HttpStatus.OK).body(familyRepository.save(family));
+    public ResponseEntity<?> addFatherToFamily() {
+        throw new NotImplementedException();
     }
 
-    public ResponseEntity<?> addChildToFamily(RequestWrapper requestWrapper) {
-        Family family = requestWrapper.getFamily();
-        List<Child> children = requestWrapper.getChildren();
-        children.forEach(family::addChild);
-        return ResponseEntity.status(HttpStatus.OK).body(familyRepository.save(family));
+    public ResponseEntity<?> addChildToFamily() {
+        throw new NotImplementedException();
     }
 
 
     public ResponseEntity<?> readFamily() {
-        throw new NotImplementedException();
+        Family family = new Family();
+        familyRepository.save(family);
+        return ResponseEntity.ok().body(familyRepository.findAll());
     }
 
     public ResponseEntity<?> readFather() {

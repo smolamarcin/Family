@@ -5,7 +5,6 @@ import com.smola.model.BirthDate;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
-import com.smola.repositories.FamilyRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

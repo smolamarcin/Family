@@ -38,7 +38,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -71,7 +70,7 @@
                 <executions>
                     <execution>
                         <id>up</id>
-                        <phase>verify</phase>
+                        <phase>post-clean</phase>
                         <goals>
                             <goal>up</goal>
                         </goals>

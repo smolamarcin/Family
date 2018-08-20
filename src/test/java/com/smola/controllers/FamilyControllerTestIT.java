@@ -13,10 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -82,44 +79,11 @@ public class FamilyControllerTestIT {
 
     @Test
     public void shouldAddFatherToFamily() throws Exception {
-        //given
-        RequestWrapper requestWrapper = RequestWrapper.
-                builder().
-                family(family).
-                father(father).
-                build();
-        Gson gson = new Gson();
-        String json = gson.toJson(requestWrapper);
-
-        //when - then
-        this.mockMvc.perform(put("/addFather")
-                .contentType(contentType)
-                .content(json))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.father.firstName", is("Jan")))
-                .andExpect(jsonPath("$.father.secondName", is("Kowalski")))
-                .andExpect(jsonPath("$.father.pesel", is("92939239")));
+        assertTrue(false);
     }
 
     @Test
     public void shouldAddChildrenToFamily() throws Exception {
-        //given
-        List<Child> children = Arrays.asList(firstChild,secondChild);
-        RequestWrapper requestWrapper = RequestWrapper.builder()
-                .family(family)
-                .children(children)
-                .build();
-
-        Gson gson = new Gson();
-        String json = gson.toJson(requestWrapper);
-
-        // when - then
-        this.mockMvc.perform(put("/addChild")
-                .contentType(contentType)
-                .content(json))
-                .andDo(print())
-                .andExpect(status().isOk());
+        assertTrue(false);
     }
 }

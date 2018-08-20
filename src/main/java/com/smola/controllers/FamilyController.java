@@ -3,6 +3,7 @@ package com.smola.controllers;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
+import com.smola.model.RequestWrapper;
 import com.smola.service.FamilyService;
 import com.smola.service.FamilyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,12 @@ public class FamilyController {
     }
 
     @PutMapping(value = "/addFather")
-    public ResponseEntity<?> addFatherToFamily(@RequestBody Family family,
-                                               @RequestBody Father father){
-        return familyService.addFatherToFamily(family,father);
+    public ResponseEntity<?> addFatherToFamily(@RequestBody RequestWrapper requestWrapper){
+        return familyService.addFatherToFamily(requestWrapper);
     }
 
-    @PostMapping(value = "/addChild")
-    public ResponseEntity<?> addChildToFamily(@RequestBody Child child){
-        return familyService.addChildToFamily(child);
+    @PutMapping(value = "/addChild")
+    public ResponseEntity<?> addChildToFamily(@RequestBody RequestWrapper requestWrapper){
+        return familyService.addChildToFamily(requestWrapper);
     }
 }

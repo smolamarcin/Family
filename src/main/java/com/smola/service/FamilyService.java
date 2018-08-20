@@ -1,14 +1,13 @@
 package com.smola.service;
 
-import com.smola.model.Child;
 import com.smola.model.Family;
-import com.smola.model.Father;
+import com.smola.model.RequestWrapper;
 import org.springframework.http.ResponseEntity;
 
 public interface FamilyService {
-    ResponseEntity<Family> addFatherToFamily(Family family,Father father);
+    ResponseEntity<?> addFatherToFamily(RequestWrapper requestWrapper);
 
-    ResponseEntity<?> addChildToFamily(Child child);
+    ResponseEntity<?> addChildToFamily(RequestWrapper child);
 
 
     ResponseEntity<?> readFamily();

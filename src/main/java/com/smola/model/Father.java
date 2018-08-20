@@ -18,11 +18,11 @@ public class Father {
     private String secondName;
     private String pesel;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private BirthDate birthDate;
 
-    private Father(){
+    private Father() {
 
     }
 

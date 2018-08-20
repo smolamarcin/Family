@@ -1,12 +1,8 @@
 package com.smola.controllers;
 
 import com.google.gson.Gson;
-import com.smola.model.BirthDate;
-import com.smola.model.Child;
-import com.smola.model.Family;
-import com.smola.model.Father;
+import com.smola.model.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +13,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,7 +30,7 @@ public class FamilyControllerTestIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private Gson gson = new Gson();
+
     private Father father;
     private Family family;
     private Child firstChild;
@@ -69,6 +67,7 @@ public class FamilyControllerTestIT {
     @Test
     public void shouldReturnAddedObjectInBody() throws Exception {
         //given
+        Gson gson = new Gson();
         String json = gson.toJson(family);
 
         //when - then
@@ -84,8 +83,13 @@ public class FamilyControllerTestIT {
     @Test
     public void shouldAddFatherToFamily() throws Exception {
         //given
-        family.addFather(father);
-        String json = gson.toJson(family);
+        RequestWrapper requestWrapper = RequestWrapper.
+                builder().
+                family(family).
+                father(father).
+                build();
+        Gson gson = new Gson();
+        String json = gson.toJson(requestWrapper);
 
         //when - then
         this.mockMvc.perform(put("/addFather")
@@ -97,5 +101,25 @@ public class FamilyControllerTestIT {
                 .andExpect(jsonPath("$.father.firstName", is("Jan")))
                 .andExpect(jsonPath("$.father.secondName", is("Kowalski")))
                 .andExpect(jsonPath("$.father.pesel", is("92939239")));
+    }
+
+    @Test
+    public void shouldAddChildrenToFamily() throws Exception {
+        //given
+        List<Child> children = Arrays.asList(firstChild,secondChild);
+        RequestWrapper requestWrapper = RequestWrapper.builder()
+                .family(family)
+                .children(children)
+                .build();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(requestWrapper);
+
+        // when - then
+        this.mockMvc.perform(put("/addChild")
+                .contentType(contentType)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

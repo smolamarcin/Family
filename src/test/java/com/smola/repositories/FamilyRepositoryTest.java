@@ -86,7 +86,9 @@ public class FamilyRepositoryTest {
         familyRepository.save(family);
 
         // then
-        assertEquals(familyRepository.findAll().size(),1);
+        List<Family> all = familyRepository.findAll();
+        assertEquals(all.size(),1);
+        //TODO
 //        assertTrue(familyRepository.findAll().contains(family));
     }
 }

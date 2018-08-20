@@ -71,7 +71,7 @@
                 <executions>
                     <execution>
                         <id>up</id>
-                        <phase>post-clean</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>up</goal>
                         </goals>

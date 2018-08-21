@@ -12,8 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.nio.charset.Charset;
-import static org.junit.Assert.assertTrue;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class FamilyControllerTestIT {
+public class FamilyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -68,7 +69,7 @@ public class FamilyControllerTestIT {
         String json = gson.toJson(family);
 
         //when - then
-        this.mockMvc.perform(post("/createFamily")
+        this.mockMvc.perform(post("/family")
                 .contentType(contentType)
                 .content(json))
                 .andDo(print())
@@ -76,14 +77,53 @@ public class FamilyControllerTestIT {
                 .andExpect(jsonPath("$.id").exists());
     }
 
-
     @Test
-    public void shouldAddFatherToFamily() throws Exception {
-        assertTrue(false);
+    public void shouldReturnHttp302_whenFamilyFound() throws Exception {
+        //given
+        Gson gson = new Gson();
+        String json = gson.toJson(family);
+
+        //when
+        this.mockMvc.perform(post("/family")
+                .contentType(contentType)
+                .content(json))
+                .andDo(print());
+
+        //then
+        Integer existingId = 1;
+        this.mockMvc.perform(get("/family/" + existingId))
+                .andDo(print())
+                .andExpect(status().isFound());
+
     }
 
     @Test
-    public void shouldAddChildrenToFamily() throws Exception {
-        assertTrue(false);
+    public void shouldReturnHttp404_whenFamilyNotFound() throws Exception {
+        Integer nonExistingId = 999;
+        this.mockMvc.perform(get("/family/" + nonExistingId))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void shouldAddFatherToExistingFamily() throws Exception {
+        // given
+        Gson gson = new Gson();
+        String familyJson = gson.toJson(family);
+
+        this.mockMvc.perform(post("/family")
+                .contentType(contentType)
+                .content(familyJson))
+                .andDo(print());
+
+        //when - then
+        String fatherJson = gson.toJson(father);
+        this.mockMvc.perform(put("/family/1/father")
+                .contentType(contentType)
+                .content(fatherJson))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+
     }
 }

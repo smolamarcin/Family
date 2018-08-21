@@ -33,7 +33,7 @@ public class FamilyRepositoryTest {
     }
 
     @After
-    public void tearDown()  {
+    public void tearDown() {
         familyRepository.deleteAll();
     }
 
@@ -53,9 +53,7 @@ public class FamilyRepositoryTest {
 
         // then
         List<Family> all = familyRepository.findAll();
-        //TODO: ASK BARTEK
-//        assertTrue(all.contains(family));
-        assertEquals(familyRepository.findAll().size(),1);
+        assertEquals(familyRepository.findAll().size(), 1);
     }
 
     @Test
@@ -86,7 +84,7 @@ public class FamilyRepositoryTest {
 
         // then
         List<Family> all = familyRepository.findAll();
-        assertEquals(all.size(),1);
+        assertEquals(all.size(), 1);
         //TODO
 //        assertTrue(familyRepository.findAll().contains(family));
     }

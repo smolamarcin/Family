@@ -21,38 +21,39 @@ public class FamilyController {
         this.familyService = familyService;
     }
 
-    @PostMapping(value = "/createFamily")
-    public ResponseEntity<Family> createFamily(@RequestBody Family family){
+    @PostMapping(value = "/family")
+    public ResponseEntity<Family> createFamily(@RequestBody Family family) {
         return familyService.createFamily(family);
     }
 
-    @GetMapping(value = "/readFamily")
-    public ResponseEntity<?> readFamily(){
-        return familyService.readFamily();
+    @GetMapping(value = "/family/{familyId}")
+    public ResponseEntity<?> readFamily(@PathVariable Integer familyId) {
+        return familyService.readFamily(familyId);
+    }
+
+    @PutMapping(value = "/family/{familyId}/father")
+    public ResponseEntity<?> addFatherToFamily(@PathVariable Integer familyId,
+                                               @RequestBody Father father) {
+        return familyService.addFatherToFamily(familyId,father);
     }
 
     @GetMapping(value = "/readFather")
-    public ResponseEntity<?> readFather(){
+    public ResponseEntity<?> readFather() {
         return familyService.readFather();
     }
 
     @GetMapping(value = "/readChild")
-    public ResponseEntity<?> readChild(){
+    public ResponseEntity<?> readChild() {
         return familyService.readChild();
     }
 
     @GetMapping(value = "searchChild")
-    public ResponseEntity<?> searchChild(){
+    public ResponseEntity<?> searchChild() {
         return familyService.searchChild();
     }
 
-    @PutMapping(value = "/addFather")
-    public ResponseEntity<?> addFatherToFamily(){
-        return familyService.addFatherToFamily();
-    }
-
     @PutMapping(value = "/addChild")
-    public ResponseEntity<?> addChildToFamily(){
+    public ResponseEntity<?> addChildToFamily() {
         return familyService.addChildToFamily();
     }
 }

@@ -1,28 +1,42 @@
 package com.smola.service;
 
-import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
+import com.smola.repositories.FatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
     @Autowired
     private FamilyRepository familyRepository;
 
-    public FamilyServiceImpl(FamilyRepository familyRepository) {
+    @Autowired
+    private FatherRepository fatherRepository;
+
+    public FamilyServiceImpl(FamilyRepository familyRepository,
+                             FatherRepository fatherRepository) {
         this.familyRepository = familyRepository;
+        this.fatherRepository = fatherRepository;
     }
 
-    public ResponseEntity<?> addFatherToFamily() {
-        throw new NotImplementedException();
+    public ResponseEntity<?> addFatherToFamily(Integer familyId, Father father) {
+        Optional<Family> family = familyRepository.findById(familyId);
+        return family.map(e -> {
+            //todo; shall I have double binding for family-father relationship?
+            // Do I need double return statemetne here?
+            Family foundedFamily = family.get();
+            foundedFamily.addFather(father);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(familyRepository.save(foundedFamily));
+        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     public ResponseEntity<?> addChildToFamily() {
@@ -30,10 +44,11 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
 
-    public ResponseEntity<?> readFamily() {
-        Family family = new Family();
-        familyRepository.save(family);
-        return ResponseEntity.ok().body(familyRepository.findAll());
+    public ResponseEntity<?> readFamily(Integer familyId) {
+        Optional<Family> family = familyRepository.findById(familyId);
+        return family
+                .map(e -> ResponseEntity.status(HttpStatus.FOUND).body(e))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     public ResponseEntity<?> readFather() {

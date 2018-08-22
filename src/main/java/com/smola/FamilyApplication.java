@@ -29,7 +29,7 @@ public class FamilyApplication implements CommandLineRunner{
                 .firstName("Jan")
                 .secondName("Kowalski")
                 .pesel("92939239")
-                .birthDate(BirthDate.of("21.07.1994"))
+                .birthDate(BirthDate.of("22.07.1994"))
                 .build();
         Family family = new Family();
         Child firstChild = Child.builder()

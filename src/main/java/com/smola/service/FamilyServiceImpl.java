@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
@@ -51,11 +52,15 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<List<Family>> findByChildParams( Map<String,String> params) {
-        String firstName = params.get("firstName");
-        String childSecondName = params.get("childSecondName");
-        String pesel  = params.get("pesel");
-        String birthDay = params.get("birthDay");
-        return this.familyRepository.findByChildren_FirstName(firstName,childSecondName,pesel,birthDay);
+    public Optional<List<Family>> findByChildParams(Map<String,String> params) {
+        Map<String, String> paramsToLowerCase = params.keySet()
+                .stream()
+                .collect(Collectors.toMap(String::toLowerCase, params::get));
+
+        String firstName = paramsToLowerCase.get("firstName");
+        String childSecondName = paramsToLowerCase.get("childSecondName");
+        String pesel  = paramsToLowerCase.get("pesel");
+        String childSex = paramsToLowerCase.get("childsex");
+        return this.familyRepository.findFamilyByMultipleChildrenAndFatherParams(firstName,childSecondName,pesel,childSex);
     }
 }

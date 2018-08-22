@@ -15,13 +15,13 @@ public interface FamilyRepository extends JpaRepository<Family, Integer> {
             + "from  Family fam "
             + "inner join fam.children chi "
             + "inner join chi.family c "
-            + "where(:firstName is null or chi.firstName = :firstName) "
-            + "and (:secondName is null or chi.secondName = :secondName)"
+            + "where(:firstname is null or chi.firstName = :firstname) "
+            + "and (:secondname is null or chi.secondName = :secondname)"
             + "and (:pesel is null or chi.pesel = :pesel)"
-            + "and (:childSex is null or chi.sex = :childSex)")
-    Optional<List<Family>> findByChildren_FirstName(@Param("firstName") String firstName,
-                                                    @Param("secondName") String secondName,
-                                                    @Param("pesel") String pesel,
-                                                    @Param("childSex") String childSex);
+            + "and (:childsex is null or chi.sex = :childsex)")
+    Optional<List<Family>> findFamilyByMultipleChildrenAndFatherParams(@Param("firstname") String firstName,
+                                                                       @Param("secondname") String secondName,
+                                                                       @Param("pesel") String pesel,
+                                                                       @Param("childsex") String childSex);
 
 }

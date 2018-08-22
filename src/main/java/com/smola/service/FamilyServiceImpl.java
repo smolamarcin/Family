@@ -4,27 +4,23 @@ import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
-import com.smola.repositories.FatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
-    @Autowired
     private FamilyRepository familyRepository;
 
     @Autowired
-    private FatherRepository fatherRepository;
-
-
-    public FamilyServiceImpl(FamilyRepository familyRepository,
-                             FatherRepository fatherRepository) {
+    public FamilyServiceImpl(FamilyRepository familyRepository) {
         this.familyRepository = familyRepository;
-        this.fatherRepository = fatherRepository;
     }
+
 
     @Transactional
     public boolean addFatherToFamily(Integer familyId, Father father) {
@@ -40,18 +36,26 @@ public class FamilyServiceImpl implements FamilyService {
         return family.isPresent();
     }
 
-
     public Optional<Family> readFamily(Integer familyId) {
         return familyRepository.findById(familyId);
     }
 
-    public Optional<Father> readFather(Integer fatherId) {
-        return fatherRepository.findById(fatherId);
-    }
-
-
     @Transactional
     public Family createFamily(Family family) {
         return familyRepository.save(family);
+    }
+
+    @Override
+    public List<Family> readFamily() {
+        return familyRepository.findAll();
+    }
+
+    @Override
+    public Optional<List<Family>> findByChildParams( Map<String,String> params) {
+        String firstName = params.get("firstName");
+        String childSecondName = params.get("childSecondName");
+        String pesel  = params.get("pesel");
+        String birthDay = params.get("birthDay");
+        return this.familyRepository.findByChildren_FirstName(firstName,childSecondName,pesel,birthDay);
     }
 }

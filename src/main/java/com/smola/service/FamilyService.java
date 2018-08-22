@@ -3,8 +3,9 @@ package com.smola.service;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
-import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface FamilyService {
@@ -15,8 +16,11 @@ public interface FamilyService {
 
     Optional<Family> readFamily(Integer familyId);
 
-    Optional<Father> readFather(Integer fatherId);
 
 
     Family createFamily(Family family);
+
+    List<Family> readFamily();
+
+    Optional<List<Family>> findByChildParams( Map<String,String> params);
 }

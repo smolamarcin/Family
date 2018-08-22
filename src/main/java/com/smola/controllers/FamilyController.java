@@ -9,9 +9,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -24,7 +24,7 @@ public class FamilyController {
         this.familyService = familyService;
     }
 
-    @PostMapping()
+    @PostMapping
     public HttpEntity<Family> createFamily(@RequestBody Family family) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -38,10 +38,9 @@ public class FamilyController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @GetMapping(value = "family/")
-    public HttpEntity<List<Family>> readFamily(){
-        //todo: seearch by aprameters
-        throw new NotImplementedException();
+    @GetMapping(value = "family/all")
+    public HttpEntity<List<Family>> readFamily() {
+        return ResponseEntity.ok().body(this.familyService.readFamily());
     }
 
     @PostMapping(value = "/family/{familyId}/father")
@@ -60,5 +59,13 @@ public class FamilyController {
             return ResponseEntity.status(HttpStatus.OK).body(child);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping(value = "/family")
+    public ResponseEntity<List<Family>> findFamiliesByChildParams(@RequestParam Map<String,String> params) {
+
+        return this.familyService.findByChildParams(params)
+                .map(f -> ResponseEntity.status(HttpStatus.FOUND).body(f))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

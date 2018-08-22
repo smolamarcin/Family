@@ -40,7 +40,7 @@ public class FamilyApplication implements CommandLineRunner{
                 .build();
 
         Child secondChild = Child.builder()
-                .firstName("Kamil")
+                .firstName("Karol")
                 .secondName("Slimak")
                 .pesel("232324")
                 .sex("male")
@@ -50,6 +50,33 @@ public class FamilyApplication implements CommandLineRunner{
         family.addChild(firstChild);
         family.addChild(secondChild);
 
+        //second family
+        Father secondFather = Father.builder()
+                .firstName("Jan")
+                .secondName("Kowalski")
+                .pesel("92939239")
+                .birthDate(BirthDate.of("21.07.1994"))
+                .build();
+        Family secondFamily = new Family();
+        Child thirdChild = Child.builder()
+                .firstName("Anna")
+                .secondName("Jopek")
+                .pesel("232323")
+                .sex("female")
+                .build();
+
+        Child fourthChild = Child.builder()
+                .firstName("Karol")
+                .secondName("Slimak")
+                .pesel("232325")
+                .sex("male")
+                .build();
+
+        secondFamily.addFather(secondFather);
+        secondFamily.addChild(thirdChild);
+        secondFamily.addChild(fourthChild);
+
         familyRepository.save(family);
+        familyRepository.save(secondFamily);
     }
 }

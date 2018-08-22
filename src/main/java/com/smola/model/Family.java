@@ -1,44 +1,42 @@
 package com.smola.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.*;
-
-import static javax.persistence.CascadeType.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
 public class Family {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Father father;
 
-
-    @OneToMany(mappedBy = "family",
-            cascade = ALL,
+    @OneToMany(cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER)
-    private List<Child> children = new ArrayList();
+            fetch = FetchType.EAGER,
+            mappedBy = "family")
+    @JsonManagedReference
+
+    private List<Child> children = new ArrayList<>();
 
     public void addChild(Child child) {
         children.add(child);
         child.setFamily(this);
     }
 
-    public void removeChild(Child child) {
+    public void removeCHild(Child child) {
         children.remove(child);
         child.setFamily(null);
     }
 
-    public void addFather(Father father){
+    public void addFather(Father father) {
         this.father = father;
     }
 
@@ -61,8 +59,6 @@ public class Family {
     public String toString() {
         return "Family{" +
                 "id=" + id +
-                ", father=" + father +
-                ", children=" + children +
                 '}';
     }
 }

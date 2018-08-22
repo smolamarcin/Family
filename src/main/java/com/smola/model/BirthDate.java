@@ -2,23 +2,25 @@ package com.smola.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-@Entity
 @NoArgsConstructor
 @Getter
+@Embeddable
 public class BirthDate {
-    @Id
-    private String birthdayDate;
+    private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private LocalDate date;
 
-    private BirthDate(String birthdayDate) {
-        this.birthdayDate = birthdayDate;
+    private BirthDate(LocalDate date) {
+        this.date = date;
     }
 
-    public static BirthDate of(String date){
-        return new BirthDate(date);
+    public static BirthDate of(String dateToParse) {
+        LocalDate localDate = LocalDate.parse(dateToParse, dateTimeFormatter);
+        return new BirthDate(localDate);
     }
 
     @Override
@@ -26,18 +28,12 @@ public class BirthDate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BirthDate birthDate = (BirthDate) o;
-        return Objects.equals(birthdayDate, birthDate.birthdayDate);
+        return Objects.equals(date, birthDate.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(birthdayDate);
+        return Objects.hash(date);
     }
 
-    @Override
-    public String toString() {
-        return "BirthDate{" +
-                "birthdayDate='" + birthdayDate + '\'' +
-                '}';
-    }
 }

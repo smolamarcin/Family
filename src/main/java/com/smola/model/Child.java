@@ -1,5 +1,6 @@
 package com.smola.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,21 +10,19 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @Getter
-public class Child {
+public final class Child {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String pesel;
     private String secondName;
     private String sex;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_id")
+    @JsonBackReference
     private Family family;
 
     private Child(){
-
     }
 
     public void setFamily(Family family) {
@@ -39,13 +38,12 @@ public class Child {
                 Objects.equals(firstName, child.firstName) &&
                 Objects.equals(pesel, child.pesel) &&
                 Objects.equals(secondName, child.secondName) &&
-                Objects.equals(sex, child.sex) &&
-                Objects.equals(family, child.family);
+                Objects.equals(sex, child.sex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, pesel, secondName, sex, family);
+        return Objects.hash(id, firstName, pesel, secondName, sex);
     }
 
     @Override
@@ -56,7 +54,6 @@ public class Child {
                 ", pesel='" + pesel + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", sex='" + sex + '\'' +
-                ", family=" + family +
                 '}';
     }
 }

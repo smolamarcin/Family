@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <dependency.locations.enabled>false</dependency.locations.enabled>
         <docker.image.name>${project.artifactId}</docker.image.name>
     </properties>
 
@@ -60,6 +61,11 @@
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -70,7 +76,7 @@
                 <executions>
                     <execution>
                         <id>up</id>
-                        <phase>post-clean</phase>
+                        <phase>pre-site</phase>
                         <goals>
                             <goal>up</goal>
                         </goals>

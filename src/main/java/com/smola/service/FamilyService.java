@@ -1,22 +1,22 @@
 package com.smola.service;
 
+import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 public interface FamilyService {
-    ResponseEntity<?> addFatherToFamily(Integer familyId, Father father);
+    boolean addFatherToFamily(Integer familyId, Father father);
 
-    ResponseEntity<?> addChildToFamily();
+    boolean addChildToFamily(Integer familyId, Child child);
 
 
-    ResponseEntity<?> readFamily(Integer familyId);
+    Optional<Family> readFamily(Integer familyId);
 
-    ResponseEntity<?> readFather();
+    Optional<Father> readFather(Integer fatherId);
 
-    ResponseEntity<?> readChild();
 
-    ResponseEntity<?> searchChild();
-
-    ResponseEntity<Family> createFamily(Family family);
+    Family createFamily(Family family);
 }

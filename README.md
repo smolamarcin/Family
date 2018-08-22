@@ -12,8 +12,11 @@ If everything is fine, go to the next steps.
 To run tests, type:
 >mvn test
 
-For create 3 containers including Spring boot app, Angular app and database run:
+First, you need to build back-end:
 >mvn clean install
+
+For create 3 containers including Spring boot app, Angular app and database run:
+>mvn pre-site
 
 Containers should be created. The default profile for containers in production. 
 You can change it in the .env file. Now available are:

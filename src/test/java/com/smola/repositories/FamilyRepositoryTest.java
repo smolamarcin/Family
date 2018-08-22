@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
-        FamilyApplication.class,})
+        FamilyApplication.class})
 @ActiveProfiles("test")
 public class FamilyRepositoryTest {
 
@@ -57,9 +57,9 @@ public class FamilyRepositoryTest {
     }
 
     @Test
-    public void shouldSaveFamilyWithChildrens() {
+    public void sshouldSaveFamilyWithChildren() {
 //        TODO:
-        // give
+        // given
         Child firstChild = Child.builder()
                 .firstName("Kamil")
                 .secondName("Slimak")
@@ -70,12 +70,11 @@ public class FamilyRepositoryTest {
         Child secondChild = Child.builder()
                 .firstName("Kamil")
                 .secondName("Slimak")
-                .pesel("232323")
+                .pesel("232324")
                 .sex("male")
                 .build();
 
         Family family = new Family();
-
         family.addChild(firstChild);
         family.addChild(secondChild);
 

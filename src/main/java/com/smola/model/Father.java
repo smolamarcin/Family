@@ -11,14 +11,13 @@ import java.util.Objects;
 @Getter
 public class Father {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String secondName;
     private String pesel;
 
-    @OneToOne(fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+    @Embedded
     private BirthDate birthDate;
 
     private Father() {
@@ -40,16 +39,5 @@ public class Father {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, secondName, pesel, birthDate);
-    }
-
-    @Override
-    public String toString() {
-        return "Father{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", pesel='" + pesel + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
     }
 }

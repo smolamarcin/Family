@@ -75,7 +75,7 @@
                 <executions>
                     <execution>
                         <id>up</id>
-                        <phase>pre-site</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>up</goal>
                         </goals>

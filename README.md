@@ -1,7 +1,9 @@
 ## In order to run, you need:
->JDK 8+ <br>
+>JDK 1.8+ <br>
 >Maven 3+<br>
 >Docker <br>
+
+If you don't have docker installed, just use ./mvnw instead of mvn in commands.
 
 ## First, you have to be in a docker group.
 Try to run:
@@ -20,18 +22,18 @@ Try to run docker run hello-world once again.<br>
 If everything is fine, go to the next steps. <br>
 
 ## To run unit tests, type:
->mvn test
+>mvn test (or ./mvnw test)
 
 ## To run integration tests, type:
->mvn verify
+>mvn verify (or ./mvnw verify)
 
 
 ## Instruction for running an app:
 First, you need to build back-end:
->mvn package
+>mvn package (or ./mvnw package)
 
 For create 3 containers including Spring boot app, Angular app and database run:
->mvn clean install
+>mvn clean install (./mvnw clean install)
 
 If you have issues with linking containers, try to change profile for "test" in .env file. 
 

@@ -5,6 +5,7 @@ import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
 import com.smola.util.Parser;
+import com.smola.util.RequestParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.TreeMap;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
@@ -55,15 +56,15 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Optional<List<Family>> findByChildParams(Map<String, String> params) {
-//        params.values().forEach(e -> parser.validate(e));
-        Map<String, String> paramsMapToLowerCase = params.keySet()
-                .stream()
-                .collect(Collectors.toMap(String::toLowerCase, params::get));
+        params.values().forEach(parser::validate);
+        Map<String, String> paramsMapToLowerCase = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        paramsMapToLowerCase.putAll(params);
+        String firstName = paramsMapToLowerCase.get(RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER);
+        String childSecondName = paramsMapToLowerCase.get(RequestParams.CHILDSECONDNAME_REQUEST_PARAMETER);
+        String pesel = paramsMapToLowerCase.get(RequestParams.PESEL_REQUEST_PARAMETER);
+        String childSex = paramsMapToLowerCase.get(RequestParams.CHILDSEX_REQUEST_PARAMETER);
 
-        String firstName = paramsMapToLowerCase.get("childfirstname");
-        String childSecondName = paramsMapToLowerCase.get("childsecondname");
-        String pesel = paramsMapToLowerCase.get("pesel");
-        String childSex = paramsMapToLowerCase.get("childsex");
-        return this.familyRepository.findFamilyByMultipleChildrenAndFatherParams(firstName, childSecondName, pesel, childSex);
+        return this.familyRepository
+                .findFamilyByMultipleChildrenAndFatherParams(firstName, childSecondName, pesel, childSex);
     }
 }

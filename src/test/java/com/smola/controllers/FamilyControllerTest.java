@@ -1,8 +1,9 @@
 package com.smola.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.smola.model.*;
+import com.smola.repositories.FamilyRepository;
+import com.smola.util.RequestParams;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,7 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,6 +31,9 @@ public class FamilyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private FamilyRepository familyRepository;
 
     private Father father;
     private Family family;
@@ -43,32 +46,34 @@ public class FamilyControllerTest {
             Charset.forName("utf8"));
 
     @BeforeClass
-    public static void setUpObjectMapper(){
+    public static void setUpObjectMapper() {
         objectMapper.findAndRegisterModules();
     }
+
     @Before
     public void setUp() {
         father = Father.builder()
                 .firstName("Jan")
                 .secondName("Kowalski")
-                .pesel("92939239")
+                .pesel("92939239231")
                 .birthDate(BirthDate.of("21.07.1994"))
                 .build();
         family = new Family();
         firstChild = Child.builder()
                 .firstName("Kamil")
                 .secondName("Slimak")
-                .pesel("232323")
+                .pesel("12323232345")
                 .sex("male")
                 .build();
 
         secondChild = Child.builder()
                 .firstName("Kamil")
                 .secondName("Slimak")
-                .pesel("232323")
+                .pesel("23232323461")
                 .sex("male")
                 .build();
     }
+
 
     @Test
     public void shouldReturnAddedObjectInBody() throws Exception {
@@ -87,12 +92,12 @@ public class FamilyControllerTest {
     @Test
     public void shouldReturnHttp302_whenFamilyFound() throws Exception {
         //given
-        String json = objectMapper.writeValueAsString(family);
+        String familyJson = objectMapper.writeValueAsString(family);
 
         //when
         this.mockMvc.perform(post("/family")
                 .contentType(contentType)
-                .content(json))
+                .content(familyJson))
                 .andDo(print());
 
         //then
@@ -131,9 +136,9 @@ public class FamilyControllerTest {
     }
 
     @Test
-    public void shouldReturnBadRequestWhenTryingToAddFatherWithBadParameters() throws Exception {
+    public void shouldReturnBadRequest_WhenTryingToAddFatherWithBadParameters() throws Exception {
         //given
-        Father fatherWithBadParameters =  Father.builder()
+        Father fatherWithBadParameters = Father.builder()
                 .firstName("J")
                 .secondName("Kowalski")
                 .pesel("92939239")
@@ -153,5 +158,26 @@ public class FamilyControllerTest {
                 .content(fatherJson))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldReturnFamily_whenSearchByParameters() throws Exception {
+        //given
+        family.addFather(father);
+        family.addChild(firstChild);
+        family.addChild(secondChild);
+
+        String familyJson = objectMapper.writeValueAsString(family);
+
+        this.mockMvc.perform(post("/family")
+                .contentType(contentType)
+                .content(familyJson))
+                .andDo(print());
+
+        //when - then
+        this.mockMvc.perform(get("/family?" + RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER.toString() + "=Kamil"))
+                .andDo(print())
+                .andExpect(status().isFound());
+
     }
 }

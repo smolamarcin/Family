@@ -1,13 +1,13 @@
-##In order to run, you need:
+## In order to run, you need:
 >JDK 8+ <br>
 >Maven 3+<br>
 >Docker <br>
 
-##First, you have to be in a docker group.
+## First, you have to be in a docker group.
 Try to run:
 >docker run hello-world
 
-You have to be in docker group. If your're not, follow this steps:
+## You have to be in docker group. If your're not, follow this steps:
 
 Create the docker group:
 >sudo groupadd docker
@@ -19,12 +19,14 @@ Log out and log back in so that your group membership is re-evaluated.<br>
 Try to run docker run hello-world once again.<br>
 If everything is fine, go to the next steps. <br>
 
-To run unit tests, type:
+## To run unit tests, type:
 >mvn test
 
-To run integration tests, type:
-mvn verify
+## To run integration tests, type:
+>mvn verify
 
+
+## Instruction for running an app:
 First, you need to build back-end:
 >mvn package
 

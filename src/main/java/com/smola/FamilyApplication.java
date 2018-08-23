@@ -51,6 +51,36 @@ public class FamilyApplication implements CommandLineRunner{
         family.addChild(secondChild);
 
 
+        Father father2 = Father.builder()
+                .firstName("Jan")
+                .secondName("Kowalski")
+                .pesel("92939239111")
+                .birthDate(BirthDate.of("22.07.1994"))
+                .build();
+        Family family2 = new Family();
+        Child firstChild2 = Child.builder()
+                .firstName("Marcin")
+                .secondName("Slimak")
+                .pesel("92939239112")
+                .sex("male")
+                .build();
+
+        Child secondChild2 = Child.builder()
+                .firstName("Lukasz")
+                .secondName("Slimak")
+                .pesel("92939239113")
+                .sex("male")
+                .build();
+
+        family.addFather(father);
+        family.addChild(firstChild);
+        family.addChild(secondChild);
+
+        family2.addFather(father2);
+        family2.addChild(firstChild2);
+        family2.addChild(secondChild2);
+
         familyRepository.save(family);
+        familyRepository.save(family2);
     }
 }

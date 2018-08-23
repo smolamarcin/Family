@@ -1,6 +1,6 @@
 package com.smola.util;
 
-public class RequestParams {
+public final class RequestParams {
 
     public static final String CHILDFIRSTNAME_REQUEST_PARAMETER = "childfirstname";
     public static final String CHILDSECONDNAME_REQUEST_PARAMETER = "childsecondname";

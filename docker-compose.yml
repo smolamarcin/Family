@@ -2,32 +2,39 @@ version: "3"
 services:
   db:
     image: mysql:5.7
+    restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=p4$$W0rd
-      - MYSQL_DATABSE=family_db
-      - MYSQL_USER=family_user
-      - MYSQL_PASSWORD=family
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=family_db
+      - MYSQL_USER=family
+      - MYSQL_PASSWORD=root
     ports:
-      - 0:3306
+      - "3306:3306"
+    networks:
+     - backend
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile-spring
-    image: family:latest
-    depends_on:
-      - db
-    ports:
-      - 0:8080
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_USER=family_user
-      - DATABASE_PASSWORD=family
-      - DATABASE_NAME=family_db
-      - DATABASE_PORT=9999
+      build:
+        context: .
+        dockerfile: Dockerfile-spring
+      image: family:latest
+      depends_on:
+        - db
+      ports:
+        - "7777:8080"
+      networks:
+           - backend
+      environment:
+        - SPRING.PROFILES.ACTIVE=${ACTIVE_PROFILE}
+
   angular:
     container_name: angular-container
-    build: 
+    build:
       context: angular-app
       dockerfile: Dockerfile-angular
     ports:
-      - 0:80
+      - "7778:80"
+
+networks:
+  backend:
+    driver: bridge
+

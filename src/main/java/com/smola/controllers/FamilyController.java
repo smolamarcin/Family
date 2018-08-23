@@ -1,30 +1,71 @@
 package com.smola.controllers;
 
+import com.smola.model.Child;
+import com.smola.model.Family;
+import com.smola.model.Father;
+import com.smola.service.FamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 public class FamilyController {
 
     @Autowired
-    private Environment environment;
+    private FamilyService familyService;
 
-    @GetMapping("/")
-    public String hello() throws UnknownHostException {
-        String datePattern = "dd/MM/yyyy HH:mm:ss";
-        DateTimeFormatter df = DateTimeFormatter.ofPattern(datePattern);
-        LocalDateTime now = LocalDateTime.now();
+    public FamilyController(FamilyService familyService) {
+        this.familyService = familyService;
+    }
 
-        String hostName = InetAddress.getLocalHost().getHostName();
-        String port = environment.getProperty("local.server.port");
+    @PostMapping("/family")
+    public HttpEntity<Family> createFamily(@Valid @RequestBody Family family) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(this.familyService.createFamily(family));
+    }
 
-        return " Do you speak whale? - Web server @ " + df.format(now) + " Host: " + hostName + " port: " + port;
+    @GetMapping(value = "/family/{familyId}")
+    public HttpEntity<Family> readFamily(@PathVariable Integer familyId) {
+        return this.familyService.readFamily(familyId)
+                .map(f -> ResponseEntity.status(HttpStatus.FOUND).body(f))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping(value = "family/all")
+    public HttpEntity<List<Family>> readFamily() {
+        return ResponseEntity.ok().body(this.familyService.readFamily());
+    }
+
+    @PostMapping(value = "/family/{familyId}/father")
+    public HttpEntity<Father> addFatherToFamily(@PathVariable Integer familyId,
+                                                @Valid @RequestBody Father father) {
+        if (this.familyService.addFatherToFamily(familyId, father)) {
+            return ResponseEntity.status(HttpStatus.OK).body(father);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PostMapping(value = "/family/{familyId}/child")
+    public ResponseEntity<Child> addChildToFamily(@PathVariable Integer familyId,
+                                                  @Valid @RequestBody Child child) {
+        if (this.familyService.addChildToFamily(familyId, child)) {
+            return ResponseEntity.status(HttpStatus.OK).body(child);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping(value = "/family")
+    public ResponseEntity<List<Family>> findFamiliesByChildParams(@RequestParam Map<String,String> params) {
+        return this.familyService.findByChildParams(params)
+                .map(f -> ResponseEntity.status(HttpStatus.FOUND).body(f))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

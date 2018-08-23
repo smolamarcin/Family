@@ -1,27 +1,41 @@
-# AngularDocker
+## In order to run, you need:
+>JDK 8+ <br>
+>Maven 3+<br>
+>Docker <br>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+## First, you have to be in a docker group.
+Try to run:
+>docker run hello-world
 
-## Development server
+## You have to be in docker group. If your're not, follow this steps:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Create the docker group:
+>sudo groupadd docker
 
-## Code scaffolding
+Add your user to the docker group.
+>sudo usermod -aG docker $USER
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Log out and log back in so that your group membership is re-evaluated.<br>
+Try to run docker run hello-world once again.<br>
+If everything is fine, go to the next steps. <br>
 
-## Build
+## To run unit tests, type:
+>mvn test
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## To run integration tests, type:
+>mvn verify
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Instruction for running an app:
+First, you need to build back-end:
+>mvn package
 
-## Running end-to-end tests
+For create 3 containers including Spring boot app, Angular app and database run:
+>mvn clean install
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+If you have issues with linking containers, try to change profile for "test" in .env file. 
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Containers should be created. The default profile for containers in production. 
+You can change it in the .env file. Now available are:
+>test <br>
+>prod <br>

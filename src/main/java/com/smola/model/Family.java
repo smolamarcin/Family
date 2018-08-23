@@ -45,14 +45,14 @@ public class Family {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Family family = (Family) o;
-        return Objects.equals(id, family.id) &&
-                Objects.equals(father, family.father) &&
+        return Objects.equals(father, family.father) &&
                 Objects.equals(children, family.children);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, father, children);
+
+        return Objects.hash(father, children);
     }
 
     @Override

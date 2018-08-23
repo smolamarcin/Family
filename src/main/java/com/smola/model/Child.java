@@ -34,8 +34,7 @@ public final class Child {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Child child = (Child) o;
-        return Objects.equals(id, child.id) &&
-                Objects.equals(firstName, child.firstName) &&
+        return Objects.equals(firstName, child.firstName) &&
                 Objects.equals(pesel, child.pesel) &&
                 Objects.equals(secondName, child.secondName) &&
                 Objects.equals(sex, child.sex);
@@ -43,7 +42,8 @@ public final class Child {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, pesel, secondName, sex);
+
+        return Objects.hash(firstName, pesel, secondName, sex);
     }
 
     @Override

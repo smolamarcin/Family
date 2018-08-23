@@ -4,6 +4,7 @@ import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
+import com.smola.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class FamilyServiceImpl implements FamilyService {
     private FamilyRepository familyRepository;
+    private Validator validator;
 
     @Autowired
-    public FamilyServiceImpl(FamilyRepository familyRepository) {
+    public FamilyServiceImpl(FamilyRepository familyRepository, Validator validator) {
         this.familyRepository = familyRepository;
+        this.validator = validator;
     }
-
 
     @Transactional
     public boolean addFatherToFamily(Integer familyId, Father father) {
@@ -52,15 +54,16 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<List<Family>> findByChildParams(Map<String,String> params) {
-        Map<String, String> paramsToLowerCase = params.keySet()
+    public Optional<List<Family>> findByChildParams(Map<String, String> params) {
+        params.values().forEach(e -> validator.validate(e));
+        Map<String, String> paramsMapToLowerCase = params.keySet()
                 .stream()
                 .collect(Collectors.toMap(String::toLowerCase, params::get));
 
-        String firstName = paramsToLowerCase.get("firstName");
-        String childSecondName = paramsToLowerCase.get("childSecondName");
-        String pesel  = paramsToLowerCase.get("pesel");
-        String childSex = paramsToLowerCase.get("childsex");
-        return this.familyRepository.findFamilyByMultipleChildrenAndFatherParams(firstName,childSecondName,pesel,childSex);
+        String firstName = paramsMapToLowerCase.get("firstname");
+        String childSecondName = paramsMapToLowerCase.get("childnecondname");
+        String pesel = paramsMapToLowerCase.get("pesel");
+        String childSex = paramsMapToLowerCase.get("childsex");
+        return this.familyRepository.findFamilyByMultipleChildrenAndFatherParams(firstName, childSecondName, pesel, childSex);
     }
 }

@@ -29,8 +29,7 @@ public class Father {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Father father = (Father) o;
-        return Objects.equals(id, father.id) &&
-                Objects.equals(firstName, father.firstName) &&
+        return Objects.equals(firstName, father.firstName) &&
                 Objects.equals(secondName, father.secondName) &&
                 Objects.equals(pesel, father.pesel) &&
                 Objects.equals(birthDate, father.birthDate);
@@ -38,6 +37,7 @@ public class Father {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName, pesel, birthDate);
+
+        return Objects.hash(firstName, secondName, pesel, birthDate);
     }
 }

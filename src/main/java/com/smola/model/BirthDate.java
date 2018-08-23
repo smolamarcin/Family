@@ -33,7 +33,7 @@ public class BirthDate {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(date);
     }
-
 }

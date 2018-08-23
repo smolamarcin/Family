@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface FamilyRepository extends JpaRepository<Family, Integer> {
-    @Query("select c "
+    @Query("select  c "
             + "from  Family fam "
             + "inner join fam.children chi "
             + "inner join chi.family c "

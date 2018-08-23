@@ -9,7 +9,7 @@ services:
       - MYSQL_USER=family
       - MYSQL_PASSWORD=root
     ports:
-      - "3306:3306"
+      - 0:3306
     networks:
      - backend
   web:
@@ -20,7 +20,7 @@ services:
       depends_on:
         - db
       ports:
-        - "7777:8080"
+        - ${BACKEND_PORT}:8080
       networks:
            - backend
       environment:
@@ -32,7 +32,7 @@ services:
       context: angular-app
       dockerfile: Dockerfile-angular
     ports:
-      - "7778:80"
+      - ${FRONTEND_PORT}:80
 
 networks:
   backend:

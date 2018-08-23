@@ -55,13 +55,13 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Optional<List<Family>> findByChildParams(Map<String, String> params) {
-        params.values().forEach(e -> parser.validate(e));
+//        params.values().forEach(e -> parser.validate(e));
         Map<String, String> paramsMapToLowerCase = params.keySet()
                 .stream()
                 .collect(Collectors.toMap(String::toLowerCase, params::get));
 
-        String firstName = paramsMapToLowerCase.get("firstname");
-        String childSecondName = paramsMapToLowerCase.get("childnecondname");
+        String firstName = paramsMapToLowerCase.get("childfirstname");
+        String childSecondName = paramsMapToLowerCase.get("childsecondname");
         String pesel = paramsMapToLowerCase.get("pesel");
         String childSex = paramsMapToLowerCase.get("childsex");
         return this.familyRepository.findFamilyByMultipleChildrenAndFatherParams(firstName, childSecondName, pesel, childSex);

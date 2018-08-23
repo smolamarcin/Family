@@ -25,58 +25,32 @@ public class FamilyApplication implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-//        Father father = Father.builder()
-//                .firstName("Jan")
-//                .secondName("Kowalski")
-//                .pesel("92939239111")
-//                .birthDate(BirthDate.of("22.07.1994"))
-//                .build();
-//        Family family = new Family();
-//        Child firstChild = Child.builder()
-//                .firstName("Kamil")
-//                .secondName("Slimak")
-//                .pesel("92939239112")
-//                .sex("male")
-//                .build();
-//
-//        Child secondChild = Child.builder()
-//                .firstName("Karol")
-//                .secondName("Slimak")
-//                .pesel("92939239113")
-//                .sex("male")
-//                .build();
-//
-//        family.addFather(father);
-//        family.addChild(firstChild);
-//        family.addChild(secondChild);
-//
-//        //second family
-//        Father secondFather = Father.builder()
-//                .firstName("Jan")
-//                .secondName("Kowalski")
-//                .pesel("92939239114")
-//                .birthDate(BirthDate.of("21.07.1994"))
-//                .build();
-//        Family secondFamily = new Family();
-//        Child thirdChild = Child.builder()
-//                .firstName("Anna")
-//                .secondName("Jopek")
-//                .pesel("92939239115")
-//                .sex("female")
-//                .build();
-//
-//        Child fourthChild = Child.builder()
-//                .firstName("Karol")
-//                .secondName("Slimak")
-//                .pesel("92939239116")
-//                .sex("male")
-//                .build();
-//
-//        secondFamily.addFather(secondFather);
-//        secondFamily.addChild(thirdChild);
-//        secondFamily.addChild(fourthChild);
-//
-//        familyRepository.save(family);
-//        familyRepository.save(secondFamily);
+        Father father = Father.builder()
+                .firstName("Jan")
+                .secondName("Kowalski")
+                .pesel("92939239111")
+                .birthDate(BirthDate.of("22.07.1994"))
+                .build();
+        Family family = new Family();
+        Child firstChild = Child.builder()
+                .firstName("Kamil")
+                .secondName("Slimak")
+                .pesel("92939239112")
+                .sex("male")
+                .build();
+
+        Child secondChild = Child.builder()
+                .firstName("Karol")
+                .secondName("Slimak")
+                .pesel("92939239113")
+                .sex("male")
+                .build();
+
+        family.addFather(father);
+        family.addChild(firstChild);
+        family.addChild(secondChild);
+
+
+        familyRepository.save(family);
     }
 }

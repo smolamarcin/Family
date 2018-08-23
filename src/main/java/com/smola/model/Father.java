@@ -26,7 +26,7 @@ public class Father {
     private String secondName;
 
     @NotNull
-    @Length(min = 12,max = 12)
+    @Length(min = 11,max = 11)
     @Pattern(regexp = "[1-9]\\d*")
     private String pesel;
 

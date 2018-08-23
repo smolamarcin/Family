@@ -24,7 +24,7 @@ public final class Child {
     @NotNull
     @Size(min = 2,message = "Second name should have atleast 2 characters")
     private String secondName;
-    @Length(min = 12,max = 12)
+    @Length(min = 11,max = 11)
     @Pattern(regexp = "[1-9]\\d*")
     private String pesel;
     @NotNull

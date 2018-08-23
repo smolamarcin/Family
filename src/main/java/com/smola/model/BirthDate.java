@@ -14,6 +14,7 @@ import java.util.Objects;
 @Embeddable
 public class BirthDate {
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
     @PastOrPresent
     private LocalDate date;
 

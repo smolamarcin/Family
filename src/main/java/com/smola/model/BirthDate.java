@@ -3,6 +3,7 @@ package com.smola.model;
 import lombok.*;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Embeddable
 public class BirthDate {
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    @Past
     private LocalDate date;
 
     private BirthDate(LocalDate date) {

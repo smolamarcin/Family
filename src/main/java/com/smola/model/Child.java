@@ -2,8 +2,12 @@ package com.smola.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -14,10 +18,18 @@ public final class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotNull
+    @Size(min = 2,message = "First name should have atleast 2 characters")
     private String firstName;
-    private String pesel;
+    @NotNull
+    @Size(min = 2,message = "Second name should have atleast 2 characters")
     private String secondName;
+    @Length(min = 12,max = 12)
+    @Pattern(regexp = "[1-9]\\d*")
+    private String pesel;
+    @NotNull
     private String sex;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     private Family family;

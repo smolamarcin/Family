@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class FamilyController {
 
     @PostMapping(value = "/family/{familyId}/father")
     public HttpEntity<Father> addFatherToFamily(@PathVariable Integer familyId,
-                                                @RequestBody Father father) {
+                                                @Valid @RequestBody Father father) {
         if (this.familyService.addFatherToFamily(familyId, father)) {
             return ResponseEntity.status(HttpStatus.OK).body(father);
         }

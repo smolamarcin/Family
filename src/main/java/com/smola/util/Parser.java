@@ -1,5 +1,5 @@
 package com.smola.util;
 
-public interface Validator<T> {
+public interface Parser<T> {
     T validate(T t);
 }

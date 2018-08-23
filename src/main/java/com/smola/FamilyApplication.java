@@ -25,25 +25,24 @@ public class FamilyApplication implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        //todo
 //        Father father = Father.builder()
 //                .firstName("Jan")
 //                .secondName("Kowalski")
-//                .pesel("92939239")
+//                .pesel("92939239111")
 //                .birthDate(BirthDate.of("22.07.1994"))
 //                .build();
 //        Family family = new Family();
 //        Child firstChild = Child.builder()
 //                .firstName("Kamil")
 //                .secondName("Slimak")
-//                .pesel("232323")
+//                .pesel("92939239112")
 //                .sex("male")
 //                .build();
 //
 //        Child secondChild = Child.builder()
 //                .firstName("Karol")
 //                .secondName("Slimak")
-//                .pesel("232324")
+//                .pesel("92939239113")
 //                .sex("male")
 //                .build();
 //
@@ -55,21 +54,21 @@ public class FamilyApplication implements CommandLineRunner{
 //        Father secondFather = Father.builder()
 //                .firstName("Jan")
 //                .secondName("Kowalski")
-//                .pesel("92939239")
+//                .pesel("92939239114")
 //                .birthDate(BirthDate.of("21.07.1994"))
 //                .build();
 //        Family secondFamily = new Family();
 //        Child thirdChild = Child.builder()
 //                .firstName("Anna")
 //                .secondName("Jopek")
-//                .pesel("232323")
+//                .pesel("92939239115")
 //                .sex("female")
 //                .build();
 //
 //        Child fourthChild = Child.builder()
 //                .firstName("Karol")
 //                .secondName("Slimak")
-//                .pesel("232325")
+//                .pesel("92939239116")
 //                .sex("male")
 //                .build();
 //

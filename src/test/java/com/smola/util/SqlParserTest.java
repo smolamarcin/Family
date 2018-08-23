@@ -10,11 +10,11 @@ import java.util.Collection;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class SqlValidatorTest {
+public class SqlParserTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                { "1=1", "11" }, { "Drop *", "Drop" }
+                { "1=1", "11" },{ "1=1", "11" }, { "Select *", "Select" }
         });
     }
 
@@ -24,9 +24,9 @@ public class SqlValidatorTest {
     @Parameterized.Parameter(1)
     public String expected;
 
-    private Validator validator = new SqlValidator();
+    private Parser parser = new SqlParser();
     @Test
     public void shouldValidateInput() {
-        assertEquals(expected,validator.validate(input));
+        assertEquals(expected, parser.validate(input));
     }
 }

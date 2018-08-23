@@ -4,7 +4,7 @@ import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
-import com.smola.util.Validator;
+import com.smola.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class FamilyServiceImpl implements FamilyService {
     private FamilyRepository familyRepository;
-    private Validator validator;
+    private Parser parser;
 
     @Autowired
-    public FamilyServiceImpl(FamilyRepository familyRepository, Validator validator) {
+    public FamilyServiceImpl(FamilyRepository familyRepository, Parser parser) {
         this.familyRepository = familyRepository;
-        this.validator = validator;
+        this.parser = parser;
     }
 
     @Transactional
@@ -55,7 +55,7 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public Optional<List<Family>> findByChildParams(Map<String, String> params) {
-        params.values().forEach(e -> validator.validate(e));
+        params.values().forEach(e -> parser.validate(e));
         Map<String, String> paramsMapToLowerCase = params.keySet()
                 .stream()
                 .collect(Collectors.toMap(String::toLowerCase, params::get));

@@ -1,8 +1,10 @@
 package com.smola.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.smola.model.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,10 +37,15 @@ public class FamilyControllerTest {
     private Child firstChild;
     private Child secondChild;
 
+    private static ObjectMapper objectMapper = new ObjectMapper();
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
 
+    @BeforeClass
+    public static void setUpObjectMapper(){
+        objectMapper.findAndRegisterModules();
+    }
     @Before
     public void setUp() {
         father = Father.builder()
@@ -65,8 +73,7 @@ public class FamilyControllerTest {
     @Test
     public void shouldReturnAddedObjectInBody() throws Exception {
         //given
-        Gson gson = new Gson();
-        String json = gson.toJson(family);
+        String json = objectMapper.writeValueAsString(family);
 
         //when - then
         this.mockMvc.perform(post("/family")
@@ -80,8 +87,7 @@ public class FamilyControllerTest {
     @Test
     public void shouldReturnHttp302_whenFamilyFound() throws Exception {
         //given
-        Gson gson = new Gson();
-        String json = gson.toJson(family);
+        String json = objectMapper.writeValueAsString(family);
 
         //when
         this.mockMvc.perform(post("/family")
@@ -108,8 +114,7 @@ public class FamilyControllerTest {
     @Test
     public void shouldAddFatherToExistingFamily() throws Exception {
         // given
-        Gson gson = new Gson();
-        String familyJson = gson.toJson(family);
+        String familyJson = objectMapper.writeValueAsString(family);
 
         this.mockMvc.perform(post("/family")
                 .contentType(contentType)
@@ -117,13 +122,36 @@ public class FamilyControllerTest {
                 .andDo(print());
 
         //when - then
-        String fatherJson = gson.toJson(father);
-        this.mockMvc.perform(put("/family/1/father")
+        String fatherJson = objectMapper.writeValueAsString(father);
+        this.mockMvc.perform(post("/family/1/father")
                 .contentType(contentType)
                 .content(fatherJson))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
 
+    @Test
+    public void shouldReturnBadRequestWhenTryingToAddFatherWithBadParameters() throws Exception {
+        //given
+        Father fatherWithBadParameters =  Father.builder()
+                .firstName("J")
+                .secondName("Kowalski")
+                .pesel("92939239")
+                .birthDate(BirthDate.of("21.07.1994"))
+                .build();
+        String familyJson = objectMapper.writeValueAsString(family);
+        String fatherJson = objectMapper.writeValueAsString(fatherWithBadParameters);
 
+        this.mockMvc.perform(post("/family")
+                .contentType(contentType)
+                .content(familyJson))
+                .andDo(print());
+
+        //when - then
+        this.mockMvc.perform(post("/family/1/father")
+                .contentType(contentType)
+                .content(fatherJson))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }

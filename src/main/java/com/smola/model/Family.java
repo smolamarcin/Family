@@ -23,7 +23,6 @@ public class Family {
             fetch = FetchType.EAGER,
             mappedBy = "family")
     @JsonManagedReference
-
     private List<Child> children = new ArrayList<>();
 
     public void addChild(Child child) {

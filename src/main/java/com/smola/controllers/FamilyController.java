@@ -26,7 +26,7 @@ public class FamilyController {
     }
 
     @PostMapping
-    public HttpEntity<Family> createFamily(@RequestBody Family family) {
+    public HttpEntity<Family> createFamily(@Valid @RequestBody Family family) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.familyService.createFamily(family));
@@ -55,7 +55,7 @@ public class FamilyController {
 
     @PostMapping(value = "/family/{familyId}/child")
     public ResponseEntity<Child> addChildToFamily(@PathVariable Integer familyId,
-                                                  @RequestBody Child child) {
+                                                  @Valid @RequestBody Child child) {
         if (this.familyService.addChildToFamily(familyId, child)) {
             return ResponseEntity.status(HttpStatus.OK).body(child);
         }

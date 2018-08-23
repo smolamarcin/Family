@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Embeddable
 public class BirthDate {
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    @Past
+    @PastOrPresent
     private LocalDate date;
 
     private BirthDate(LocalDate date) {

@@ -1,3 +1,5 @@
+Travis status:
+[![Build Status](https://travis-ci.com/smolamarcin/Family.svg?branch=master)](https://travis-ci.com/smolamarcin/Family)
 ## In order to run, you need:
 >JDK 1.8+ <br>
 >Maven 3+<br>

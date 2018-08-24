@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
@@ -55,7 +54,7 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public Optional<List<Family>> findByChildParams(Map<String, String> params) {
+    public List<Family> findByChildParams(Map<String, String> params) {
         params.values().forEach(parser::validate);
         String firstName = params.get(RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER);
         String childSecondName = params.get(RequestParams.CHILDSECONDNAME_REQUEST_PARAMETER);

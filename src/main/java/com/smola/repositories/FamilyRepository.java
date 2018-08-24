@@ -19,7 +19,7 @@ public interface FamilyRepository extends JpaRepository<Family, Integer> {
             + "and (:secondname is null or chi.secondName = :secondname)"
             + "and (:pesel is null or chi.pesel = :pesel)"
             + "and (:childsex is null or chi.sex = :childsex))")
-    Optional<List<Family>> findFamilyByMultipleChildrenAndFatherParams(@Param("firstname") String firstName,
+    List<Family> findFamilyByMultipleChildrenAndFatherParams(@Param("firstname") String firstName,
                                                                        @Param("secondname") String secondName,
                                                                        @Param("pesel") String pesel,
                                                                        @Param("childsex") String childSex);

@@ -22,5 +22,5 @@ public interface FamilyService {
 
     List<Family> readFamily();
 
-    Optional<List<Family>> findByChildParams( Map<String,String> params);
+    List<Family> findByChildParams(Map<String,String> params);
 }

@@ -63,9 +63,12 @@ public class FamilyController {
     }
 
     @GetMapping(value = "/family")
-    public ResponseEntity<List<Family>> findFamiliesByChildParams(@RequestParam Map<String,String> params) {
-        return this.familyService.findByChildParams(params)
-                .map(f -> ResponseEntity.status(HttpStatus.FOUND).body(f))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<List<Family>> findFamiliesByChildParams(@RequestParam Map<String, String> params) {
+        List<Family> byChildParams = this.familyService.findByChildParams(params);
+        ResponseEntity<List<Family>> response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(byChildParams);
+        if (!byChildParams.isEmpty()) {
+            response = ResponseEntity.ok().body(byChildParams);
+        }
+        return response;
     }
 }

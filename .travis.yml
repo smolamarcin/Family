@@ -1,7 +1,9 @@
 language: java
 jdk: oraclejdk8
 install: true
-script: ./mvnw verify
+script:
+  - ./mvnw verify
+  - - bash <(curl -s https://codecov.io/bash)
 cache:
   directories:
   - $HOME/.m2

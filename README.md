@@ -7,7 +7,7 @@ Travis status:
 >Maven 3+<br>
 >Docker <br>
 
-If you don't have docker installed, just use ./mvnw instead of mvn in commands.
+If you don't have maven installed, just use ./mvnw instead of mvn in commands.
 
 ## First, you have to be in a docker group.
 Try to run:

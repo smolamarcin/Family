@@ -165,7 +165,7 @@ public class FamilyControllerTestIT {
         //given
         family.addFather(father);
         family.addChild(firstChild);
-        family.addChild(secondChild);s
+        family.addChild(secondChild);
 
         String familyJson = objectMapper.writeValueAsString(family);
 
@@ -173,7 +173,7 @@ public class FamilyControllerTestIT {
                 .contentType(contentType)
                 .content(familyJson))
                 .andDo(print());
-asdas
+
         //when - then
         this.mockMvc.perform(get("/family?" + RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER.toString() + "=Kamil"))
                 .andDo(print())

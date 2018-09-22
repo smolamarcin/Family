@@ -3,6 +3,12 @@ Travis status:
 
 Code coverage:
 [![codecov](https://codecov.io/gh/smolamarcin/Family/branch/master/graph/badge.svg)](https://codecov.io/gh/smolamarcin/Family)
+Here you have the family managment system. You can create your own family, add children to existing family and add father to existing family.
+Also, you can filter families by different params.
+
+The main goal of the project was to learn how to dockerize your application. The goal is achieved.
+In the future I'll implement the front-end part. For "todo list     ttake a look in the backlog. For this moment, only backend and infrastructure works.
+
 ## In order to run, you need:
 >JDK 1.8+ <br>
 >Maven 3+<br>
@@ -26,7 +32,7 @@ Log out and log back in so that your group membership is re-evaluated.<br>
 Try to run docker run hello-world once again.<br>
 If everything is fine, go to the next steps. <br>
 
-## To run unit tests, type:
+## To run unit tests    t, type:
 >mvn test (or ./mvnw test)
 
 ## To run integration tests, type:

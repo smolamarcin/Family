@@ -2,7 +2,7 @@ Travis status:
 [![Build Status](https://travis-ci.com/smolamarcin/Family.svg?branch=master)](https://travis-ci.com/smolamarcin/Family)
 
 Code coverage:
-[![codecov](https://codecov.io/gh/smolamarcin/Family/branch/master/graph/badge.svg)](https://codecov.io/gh/smolamarcin/Family)
+[![codecov](https://codecov.io/gh/smolamarcin/Family/branch/master/graph/badge.svg)](https://codecov.io/gh/smolamarcin/Family) <br>
 Here you have the family managment system. You can create your own family, add children to existing family and add father to existing family.
 Also, you can filter families by different params.
 

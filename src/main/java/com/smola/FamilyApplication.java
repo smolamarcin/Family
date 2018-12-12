@@ -24,7 +24,7 @@ public class FamilyApplication implements CommandLineRunner{
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args)  {
         Father father = Father.builder()
                 .firstName("Jan")
                 .secondName("Kowalski")

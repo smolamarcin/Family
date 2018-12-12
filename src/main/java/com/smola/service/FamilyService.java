@@ -3,6 +3,7 @@ package com.smola.service;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
+import com.smola.repositories.FamilySpec;
 
 import java.util.List;
 import java.util.Map;
@@ -22,5 +23,5 @@ public interface FamilyService {
 
     List<Family> readFamily();
 
-    List<Family> findByChildParams(Map<String,String> params);
+    List findByChildParams(FamilySpec familySpec);
 }

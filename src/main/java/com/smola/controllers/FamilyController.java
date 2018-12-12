@@ -3,6 +3,7 @@ package com.smola.controllers;
 import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
+import com.smola.repositories.FamilySpec;
 import com.smola.service.FamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -63,12 +64,7 @@ public class FamilyController {
     }
 
     @GetMapping(value = "/family")
-    public ResponseEntity<List<Family>> findFamiliesByChildParams(@RequestParam Map<String, String> params) {
-        List<Family> byChildParams = this.familyService.findByChildParams(params);
-        ResponseEntity<List<Family>> response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(byChildParams);
-        if (!byChildParams.isEmpty()) {
-            response = ResponseEntity.ok().body(byChildParams);
-        }
-        return response;
+    public ResponseEntity<List<Family>> findFamiliesByChildParams(FamilySpec familySpec) {
+        return ResponseEntity.ok(familyService.findByChildParams(familySpec));
     }
 }

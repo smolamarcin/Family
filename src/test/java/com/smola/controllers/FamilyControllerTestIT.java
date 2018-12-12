@@ -175,7 +175,8 @@ public class FamilyControllerTestIT {
                 .andDo(print());
 
         //when - then
-        this.mockMvc.perform(get("/family?" + RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER.toString() + "=Kamil"))
+        this.mockMvc.perform(get("/family?" + "firstname" + "=Kamil&" +
+                "secondname=Slimak"))
                 .andDo(print())
                 .andExpect(status().isOk());
 

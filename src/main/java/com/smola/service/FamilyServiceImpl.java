@@ -4,12 +4,14 @@ import com.smola.model.Child;
 import com.smola.model.Family;
 import com.smola.model.Father;
 import com.smola.repositories.FamilyRepository;
+import com.smola.repositories.FamilySpec;
 import com.smola.util.Parser;
 import com.smola.util.RequestParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -54,14 +56,7 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public List<Family> findByChildParams(Map<String, String> params) {
-        params.values().forEach(parser::validate);
-        String firstName = params.get(RequestParams.CHILDFIRSTNAME_REQUEST_PARAMETER);
-        String childSecondName = params.get(RequestParams.CHILDSECONDNAME_REQUEST_PARAMETER);
-        String pesel = params.get(RequestParams.PESEL_REQUEST_PARAMETER);
-        String childSex = params.get(RequestParams.CHILDSEX_REQUEST_PARAMETER);
-
-        return this.familyRepository
-                .findFamilyByMultipleChildrenAndFatherParams(firstName, childSecondName, pesel, childSex);
+    public List<Family> findByChildParams(FamilySpec familySpec) {
+        return familyRepository.findAll(familySpec);
     }
 }
